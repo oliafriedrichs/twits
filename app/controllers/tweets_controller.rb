@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_tweet, only: [:show, :edit, :update]
+  before_action :set_tweet, only: [:show, :edit, :update, :destroy]
   def index
     @tweets = Tweet.all
   end
@@ -24,6 +24,15 @@ class TweetsController < ApplicationController
   def new
     @tweet = Tweet.new
   end
+
+  def destroy
+    @tweet.destroy
+
+    respond_to do |format|
+      format.html { redirect_to tweets_url, notic: "Your tweet has been deleted."}
+    end
+  end
+
 
   def create
     @tweet = Tweet.new(tweet_params)
