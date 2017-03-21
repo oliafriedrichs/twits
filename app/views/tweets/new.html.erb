@@ -1,2 +1,40 @@
-<h1>Tweets#new</h1>
-<p>Find me in app/views/tweets/new.html.erb</p>
+<h1>New Tweet</h1>
+
+<%= form_for(@tweet) do |f| %>
+  <!-- Check for errors -->
+  <% if @tweet.errors.any? %>
+  <div class="error_explanation">
+    <h2>
+      <%= pluralize(@tweet.errors.count, 'error') %> prohibited this tweet from being saved:
+    </h2>
+
+    <!-- iterate through the errors and showp them-->
+
+    <ul>
+      <% @tweet.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <!-- Form -->
+
+  <div class="field form-group">
+    <%= f.label :message %>
+    <br>
+    <%= f.text_field :message, class: 'form-control' %>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :user_id %><br>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div class="actions form-group">
+    <%= f.submit 'Tweet This', class: 'btn bth-danger' %>
+  </div>
+
+<% end %>
+
+<%= link_to 'Home', tweets_path, class: 'btn bth-default' %>
